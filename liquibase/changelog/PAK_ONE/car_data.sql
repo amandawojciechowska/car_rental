@@ -1,0 +1,14 @@
+-- INSERT INTO car(brand, daily_rate, licence_plate, model, rental_type, year_of_production)
+-- VALUES("AUDI", 90, "ONY1234", "Q8", "AVAILABLE", "2020");
+--
+-- INSERT INTO car(brand, daily_rate, licence_plate, model, rental_type, year_of_production)
+-- VALUES("BMW", 100, "DW15786", "X6", "AVAILABLE", "2021");
+--
+-- INSERT INTO car(brand, daily_rate, licence_plate, model, rental_type, year_of_production)
+-- VALUES("KIA", 50, "DW18666", "SPORTAGE", "AVAILABLE", "2015");
+--
+-- INSERT INTO car(brand, daily_rate, licence_plate, model, rental_type, year_of_production)
+-- VALUES("KIA", 40, "DW17746", "FORTE", "AVAILABLE", "2010");
+--
+-- INSERT INTO car(brand, daily_rate, licence_plat`, model, rental_type, year_of_production)
+-- VALUES("LEXUS", 80, "ONYX666", "LS", "AVAILABLE", "2021");
