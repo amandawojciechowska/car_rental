@@ -1,8 +1,12 @@
 package cap.s42academy.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -28,12 +32,15 @@ public class CarRental implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Customer customer;
 
+    @Min(3)
+    @Max(90)
     @Column(name = "DAYS", nullable = false)
     private Long days;
 
-    @Column(name = "RENTAL_DATE_FROM")
+    @Column(name = "RENTAL_DATE_FROM", nullable = false)
     private LocalDate rentalDateFrom;
 
     @Column(name = "RENTAL_DATE_TO")

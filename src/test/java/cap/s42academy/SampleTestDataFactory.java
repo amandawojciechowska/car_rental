@@ -1,6 +1,5 @@
 package cap.s42academy;
 
-import cap.s42academy.enums.RentalType;
 import cap.s42academy.model.Car;
 import cap.s42academy.model.CarRental;
 import cap.s42academy.model.Customer;
@@ -25,15 +24,15 @@ public class SampleTestDataFactory {
 
 
     public static Car car1() {
-        return new Car("AUDI", "Q6", "2020", "ONYXD123", new BigDecimal("80.00"), RentalType.AVAILABLE);
+        return new Car("AUDI", "Q6", "2020", "ONYXD123", new BigDecimal("80.00"));
     }
 
     public static Car car2() {
-        return new Car("BMW", "X7", "2022", "ONYXD666", new BigDecimal("110.00"), RentalType.AVAILABLE);
+        return new Car("BMW", "X7", "2022", "ONYXD666", new BigDecimal("110.00"));
     }
 
     public static Car car3() {
-        return new Car("LEXUS", "LS", "2019", "ONYXD978", new BigDecimal("90.00"), RentalType.AVAILABLE);
+        return new Car("LEXUS", "LS", "2019", "ONYXD978", new BigDecimal("90.00"));
     }
 
     public static Customer customer1() {
