@@ -44,12 +44,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(Long customerId) {
-        //dodac walidacje, ze jezeli klient ma historie wynajmu to rzucamy exceptiona ze nie mozna usunac klienta bla
-        //jest juz metoda w repository customerRental
-        //dodac walidacje jezeli chodzi o dodawanie nowych wartosci
-        //nie blank nie null nie minusowe wartosci
+        //dodac walidacje, ze jezeli klient ma rezerwacje aktualna badz w przyszlosci nie mozna go usunac
         Customer customer = getCustomer(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
         customerRepository.delete(customer);
     }
+
 }

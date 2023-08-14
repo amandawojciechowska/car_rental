@@ -46,10 +46,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCar(final Long carId) {
-        //dodac walidacje, ze jezeli auto ma historie wynajmu to rzucamy exceptiona ze nie mozna usunac auta
-        //jest juz metoda w repository carRental
-        //dodac walidacje jezeli chodzi o dodawanie nowych wartosci
-        //nie blank nie null nie minusowe wartosci
+        //dodac walidacje, ze jezeli auto ma rezerwacje aktualna badz w przyszlosci nie mozna go usunac
         Car car = getCar(carId)
                 .orElseThrow(() -> new CarNotFoundException(carId));
         carRepository.delete(car);

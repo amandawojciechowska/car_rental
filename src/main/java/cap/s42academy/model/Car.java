@@ -1,6 +1,5 @@
 package cap.s42academy.model;
 
-import cap.s42academy.enums.RentalType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,16 +39,11 @@ public class Car implements Serializable {
     @Column(name = "DAILY_RATE")
     private BigDecimal dailyRate;
 
-    @Column(name = "RENTAL_TYPE", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private RentalType rentalType;
-
-    public Car(String brand, String model, String yearOfProduction, String licencePlate, BigDecimal dailyRate, RentalType rentalType) {
+    public Car(String brand, String model, String yearOfProduction, String licencePlate, BigDecimal dailyRate) {
         this.brand = brand;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
         this.licencePlate = licencePlate;
         this.dailyRate = dailyRate;
-        this.rentalType = rentalType;
     }
 }

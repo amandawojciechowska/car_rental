@@ -61,9 +61,6 @@ class CarServiceImplTest {
             assertEquals(savedCar.getDailyRate(),
                     foundCar.get()
                             .getDailyRate());
-            assertEquals(savedCar.getRentalType(),
-                    foundCar.get()
-                            .getRentalType());
         });
     }
 

@@ -14,4 +14,5 @@ public interface CustomerService {
     Optional<Customer> getCustomerByDrivingLicence(String drivingLicence);
 
     void deleteCustomer(Long customerId);
+
 }
