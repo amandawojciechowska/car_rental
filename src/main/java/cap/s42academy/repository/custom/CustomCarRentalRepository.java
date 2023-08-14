@@ -13,9 +13,9 @@ public interface CustomCarRentalRepository {
 
     BigDecimal returnCarAndGetRentalFee(CarRental carRental);
 
-    List<CarRental> checkBookingByCustomer(Customer customer);
+    List<CarRental> checkBookingByCustomer(Long customerId);
 
-    List<CarRental> checkBookingByCar(Car car);
+    List<CarRental> checkBookingByCar(Long carId);
 
     BigDecimal getTotalIncome();
 

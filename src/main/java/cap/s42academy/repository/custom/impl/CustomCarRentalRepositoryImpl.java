@@ -27,19 +27,19 @@ public class CustomCarRentalRepositoryImpl implements CustomCarRentalRepository 
     }
 
     @Override
-    public List<CarRental> checkBookingByCustomer(Customer customer) {
-        String sql = "SELECT cr FROM CarRental cr JOIN cr.customer c WHERE c.id = :customerId and cr.rentalDateTo >= :dateNow";
-        Query query = entityManager.createQuery(sql, CarRental.class);
-        query.setParameter("customerId", customer.getId());
+    public List<CarRental> checkBookingByCustomer(Long customerId) {
+        String sql = "SELECT cr.* FROM car_rental cr WHERE (cr.customer_id = :customerId and cr.rental_date_to >= :dateNow)";
+        Query query = entityManager.createNativeQuery(sql, CarRental.class);
+        query.setParameter("customerId", customerId);
         query.setParameter("dateNow", LocalDate.now());
         return (List<CarRental>) query.getResultList();
     }
 
     @Override
-    public List<CarRental> checkBookingByCar(Car car) {
-        String sql = "SELECT cr FROM CarRental cr JOIN cr.car c WHERE c.id = :carId and cr.rentalDateTo >= :dateNow";
-        Query query = entityManager.createQuery(sql, CarRental.class);
-        query.setParameter("carId", car.getId());
+    public List<CarRental> checkBookingByCar(Long carId) {
+        String sql = "SELECT cr.* FROM car_rental cr WHERE (cr.car_id = :carId and cr.rental_date_to >= :dateNow)";
+        Query query = entityManager.createNativeQuery(sql, CarRental.class);
+        query.setParameter("carId", carId);
         query.setParameter("dateNow", LocalDate.now());
         return (List<CarRental>) query.getResultList();
     }

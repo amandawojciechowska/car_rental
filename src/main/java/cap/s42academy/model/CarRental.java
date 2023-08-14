@@ -28,6 +28,7 @@ public class CarRental implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CAR_ID", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Car car;
 
     @ManyToOne
