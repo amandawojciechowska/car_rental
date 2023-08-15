@@ -23,8 +23,8 @@ public interface CustomCarRentalRepository {
 
     Optional<Customer> getCustomerWhoRentedTheMostCars();
 
-    List<CarRental> getCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo);
+    List<CarRental> isCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo);
 
-    List<CarRental> getCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo);
+    List<CarRental> isCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo);
 
 }

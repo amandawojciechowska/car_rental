@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,23 +31,23 @@ public class CarRentalServiceImpl implements CarRentalService {
         if (carRental.getCustomer() == null) {
             throw new BusinessException("Customer cannot be null");
         }
-        List<CarRental> rentListCar = getCarAvailableOnGivenTime(carRental.getCar(), carRental.getRentalDateFrom(), carRental.getRentalDateTo());
-        if (!rentListCar.isEmpty()) {
+        Boolean isCarAvailable = isCarAvailableOnGivenTime(carRental.getCar(), carRental.getRentalDateFrom(), carRental.getRentalDateTo());
+        if (!isCarAvailable) {
             throw new BusinessException(String.format(
                     "In the given dates from: %s and to: %s it is not possible to rent car with id: %s",
                     carRental.getRentalDateFrom(),
                     carRental.getRentalDateTo(),
                     carRental.getCar().getId()));
         }
-        List<CarRental> rentListCustomer = getCustomerHasRentedCarOnGivenTime(carRental.getCustomer(), carRental.getRentalDateFrom(), carRental.getRentalDateTo());
-        if (!rentListCustomer.isEmpty()) {
+        Boolean rented = isCustomerHasRentedCarOnGivenTime(carRental.getCustomer(), carRental.getRentalDateFrom(), carRental.getRentalDateTo());
+        if (rented) {
             throw new BusinessException(String.format(
                     "In the given dates from: %s and to: %s the customer with id: %s has already rented a car",
                     carRental.getRentalDateFrom(),
                     carRental.getRentalDateTo(),
                     carRental.getCustomer().getId()));
         }
-        if(carRental.getDays() < 3 || carRental.getDays() > 90) {
+        if (carRental.getDays() < 3 || carRental.getDays() > 90) {
             throw new BusinessException(String.format(
                     "The minimum number of rental days is %s days and the maximum is %s", 3, 90));
         }
@@ -61,16 +60,6 @@ public class CarRentalServiceImpl implements CarRentalService {
     @Override
     public BigDecimal returnCarAndGetRentalFee(CarRental carRental) {
         return carRentalRepository.returnCarAndGetRentalFee(carRental);
-    }
-
-    @Override
-    public List<CarRental> checkBookingByCustomer(Long customerId) {
-        return carRentalRepository.checkBookingByCustomer(customerId);
-    }
-
-    @Override
-    public List<CarRental> checkBookingByCar(Long carId) {
-        return carRentalRepository.checkBookingByCar(carId);
     }
 
     @Override
@@ -89,12 +78,20 @@ public class CarRentalServiceImpl implements CarRentalService {
     }
 
     @Override
-    public List<CarRental> getCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo) {
-        return carRentalRepository.getCarAvailableOnGivenTime(car, dateFrom, dateTo);
+    public Boolean isCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo) {
+        List<CarRental> isNotAvailable = carRentalRepository.isCarAvailableOnGivenTime(car, dateFrom, dateTo);
+        if (isNotAvailable.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public List<CarRental> getCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo) {
-        return carRentalRepository.getCustomerHasRentedCarOnGivenTime(customer, dateFrom, dateTo);
+    public Boolean isCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo) {
+        List<CarRental> rented = carRentalRepository.isCustomerHasRentedCarOnGivenTime(customer, dateFrom, dateTo);
+        if (rented.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }

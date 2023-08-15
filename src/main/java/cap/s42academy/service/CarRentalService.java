@@ -15,18 +15,14 @@ public interface CarRentalService {
 
     BigDecimal returnCarAndGetRentalFee(CarRental carRental);
 
-    List<CarRental> checkBookingByCustomer(Long customerId);
-
-    List<CarRental> checkBookingByCar(Long carId);
-
     BigDecimal getTotalIncome();
 
     Optional<Car> getTheMostRentedCar();
 
     Optional<Customer> getCustomerWhoRentedTheMostCars();
 
-    List<CarRental> getCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo);
+    Boolean isCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo);
 
-    List<CarRental> getCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo);
+    Boolean isCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo);
 
 }

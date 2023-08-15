@@ -46,4 +46,9 @@ public class SampleTestDataFactory {
     public static CarRental carRental(Car car, Customer customer) {
         return new CarRental(car, customer, rentalDaysCounter, DATE_FROM, DATE_TO);
     }
+
+    public static CarRental carRental(Car car, Customer customer, LocalDate from, LocalDate to, Long counter) {
+        return new CarRental(car, customer, counter, from, to);
+    }
+
 }

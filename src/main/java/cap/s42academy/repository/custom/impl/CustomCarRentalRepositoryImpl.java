@@ -20,8 +20,10 @@ public class CustomCarRentalRepositoryImpl implements CustomCarRentalRepository 
 
     @Override
     public BigDecimal returnCarAndGetRentalFee(CarRental carRental) {
-        String sql = "SELECT sum(c.daily_rate * cr.days) AS daily_rate_sum FROM car_rental cr JOIN car c ON c.id = cr.car_id WHERE cr.id = :carRentalId";
-        Query query = entityManager.createNativeQuery(sql, BigDecimal.class);
+        //String sql = "SELECT sum(c.daily_rate * cr.days) FROM car_rental cr JOIN car c ON c.id = cr.car_id WHERE cr.id = :carRentalId";
+        String sql = "SELECT sum(c.dailyRate * cr.days) FROM CarRental cr JOIN cr.car c WHERE cr.id = :carRentalId";
+        //Query query = entityManager.createNativeQuery(sql, BigDecimal.class);
+        Query query = entityManager.createQuery(sql, BigDecimal.class);
         query.setParameter("carRentalId", carRental.getId());
         return (BigDecimal) query.getSingleResult();
     }
@@ -53,7 +55,7 @@ public class CustomCarRentalRepositoryImpl implements CustomCarRentalRepository 
 
     @Override
     public Optional<Car> getTheMostRentedCar() {
-        String sql = "SELECT cr.car FROM CarRental cr GROUP BY cr.car ORDER BY count(cr) DESC";
+        String sql = "SELECT cr.car FROM CarRental cr JOIN cr.car c GROUP BY c.id ORDER BY count(cr.id) DESC";
         Query query = entityManager.createQuery(sql, Car.class);
         query.setMaxResults(1);
         return query.getResultList()
@@ -63,7 +65,7 @@ public class CustomCarRentalRepositoryImpl implements CustomCarRentalRepository 
 
     @Override
     public Optional<Customer> getCustomerWhoRentedTheMostCars() {
-        String sql = "SELECT cr.customer FROM CarRental cr GROUP BY cr.customer ORDER BY count(cr) DESC";
+        String sql = "SELECT cr.customer FROM CarRental cr JOIN cr.customer c GROUP BY c.id ORDER BY count(cr.id) DESC";
         Query query = entityManager.createQuery(sql, Customer.class);
         query.setMaxResults(1);
         return query.getResultList()
@@ -72,8 +74,8 @@ public class CustomCarRentalRepositoryImpl implements CustomCarRentalRepository 
     }
 
     @Override
-    public List<CarRental> getCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo) {
-        String sql = "SELECT cr FROM car_rental cr WHERE (cr.car_id = :carId and ((cr.rental_date_from <= :dateFrom and cr.rental_date_to > :dateTo) or (cr.rental_date_to >= :dateFrom and cr.rental_date_to <= :dateTo) or (cr.rental_date_from >= :dateFrom and cr.rental_date_from <= :dateTo)))";
+    public List<CarRental> isCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo) {
+        String sql = "SELECT cr.* FROM car_rental cr WHERE (cr.car_id = :carId and ((cr.rental_date_from <= :dateFrom and cr.rental_date_to > :dateTo) or (cr.rental_date_to >= :dateFrom and cr.rental_date_to <= :dateTo) or (cr.rental_date_from >= :dateFrom and cr.rental_date_from <= :dateTo)))";
         Query query = entityManager.createNativeQuery(sql, CarRental.class);
         query.setParameter("carId", car.getId());
         query.setParameter("dateFrom", dateFrom);
@@ -82,8 +84,8 @@ public class CustomCarRentalRepositoryImpl implements CustomCarRentalRepository 
     }
 
     @Override
-    public List<CarRental> getCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo) {
-        String sql = "SELECT cr FROM car_rental cr WHERE (cr.customer_id = :customerId and ((cr.rental_date_from <= :dateFrom and cr.rental_date_to > :dateTo) or (cr.rental_date_to >= :dateFrom and cr.rental_date_to <= :dateTo) or (cr.rental_date_from >= :dateFrom and cr.rental_date_from <= :dateTo)))";
+    public List<CarRental> isCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo) {
+        String sql = "SELECT cr.* FROM car_rental cr WHERE (cr.customer_id = :customerId and ((cr.rental_date_from <= :dateFrom and cr.rental_date_to > :dateTo) or (cr.rental_date_to >= :dateFrom and cr.rental_date_to <= :dateTo) or (cr.rental_date_from >= :dateFrom and cr.rental_date_from <= :dateTo)))";
         Query query = entityManager.createNativeQuery(sql, CarRental.class);
         query.setParameter("customerId", customer.getId());
         query.setParameter("dateFrom", dateFrom);
