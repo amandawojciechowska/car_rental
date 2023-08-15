@@ -27,7 +27,7 @@ public class Customer implements Serializable {
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
 
     @Column(name = "DRIVING_LICENCE", nullable = false)

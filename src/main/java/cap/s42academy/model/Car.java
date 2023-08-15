@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -23,15 +25,23 @@ public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @NotBlank
     @Column(name = "BRAND", nullable = false)
     private String brand;
 
+    @NotNull
+    @NotBlank
     @Column(name = "MODEL", nullable = false)
     private String model;
 
+    @NotNull
+    @NotBlank
     @Column(name = "YEAR_OF_PRODUCTION", nullable = false)
     private String yearOfProduction;
 
+    @NotNull
+    @NotBlank
     @Column(name = "LICENCE_PLATE", nullable = false)
     private String licencePlate;
 
