@@ -135,6 +135,24 @@ class CarRentalServiceImplTest {
     }
 
     @Test
+    void shouldReturnTotalIncome() {
+        // given
+        Car car1 = this.carService.addCar(car1());
+        Customer customer1 = this.customerService.addCustomer(customer1());
+        this.carRentalService.addCarRental(carRental(car1, customer1, LocalDate.now().plusDays(1), LocalDate.now().plusDays(6), 5L));
+        this.carRentalService.addCarRental(carRental(car1, customer1, LocalDate.now().plusDays(7), LocalDate.now().plusDays(17), 10L));
+        this.carRentalService.addCarRental(carRental(car1, customer1, LocalDate.now().plusDays(18), LocalDate.now().plusDays(28), 10L));
+
+        // when
+        BigDecimal totalIncome = this.carRentalService.getTotalIncome();
+
+        // then
+        Assertions.assertAll(() -> {
+            assertTrue(BigDecimal.valueOf(2000).compareTo(totalIncome) == 0);
+        });
+    }
+
+    @Test
     void shouldGetTheMostRentedCar() {
         // given
         Car car1 = this.carService.addCar(car1());
