@@ -13,9 +13,9 @@ public interface CustomCarRentalRepository {
 
     BigDecimal returnCarAndGetRentalFee(CarRental carRental);
 
-    List<CarRental> checkBookingByCustomer(Customer customer);
+    List<CarRental> checkBookingByCustomer(Long customerId);
 
-    List<CarRental> checkBookingByCar(Car car);
+    List<CarRental> checkBookingByCar(Long carId);
 
     BigDecimal getTotalIncome();
 
@@ -23,8 +23,8 @@ public interface CustomCarRentalRepository {
 
     Optional<Customer> getCustomerWhoRentedTheMostCars();
 
-    List<CarRental> getCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo);
+    List<CarRental> isCarAvailableOnGivenTime(Car car, LocalDate dateFrom, LocalDate dateTo);
 
-    List<CarRental> getCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo);
+    List<CarRental> isCustomerHasRentedCarOnGivenTime(Customer customer, LocalDate dateFrom, LocalDate dateTo);
 
 }

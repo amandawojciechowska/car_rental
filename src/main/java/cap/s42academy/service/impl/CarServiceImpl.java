@@ -1,7 +1,9 @@
 package cap.s42academy.service.impl;
 
+import cap.s42academy.exceptions.BusinessException;
 import cap.s42academy.exceptions.CarNotFoundException;
 import cap.s42academy.model.Car;
+import cap.s42academy.model.CarRental;
 import cap.s42academy.repository.CarRentalRepository;
 import cap.s42academy.repository.CarRepository;
 import cap.s42academy.service.CarService;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,9 +49,13 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCar(final Long carId) {
-        //dodac walidacje, ze jezeli auto ma rezerwacje aktualna badz w przyszlosci nie mozna go usunac
         Car car = getCar(carId)
                 .orElseThrow(() -> new CarNotFoundException(carId));
+        List<CarRental> rentListCar = carRentalRepository.checkBookingByCar(carId);
+        if (!rentListCar.isEmpty()) {
+            throw new BusinessException(String.format(
+                    "Car with id: %s has an active reservation!", carId));
+        }
         carRepository.delete(car);
     }
 
